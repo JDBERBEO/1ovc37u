@@ -3,18 +3,23 @@ const mongoose = require("mongoose");
 const Note = require("./models/Note");
 const path = require('path');
 const md = require('marked');
+const pageViewMid = require('./pageViewMid')
 
 const app = express();
 
+//database connection
 mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost:27017/notes', { useNewUrlParser: true });
 
+//setting Pug Engine
 app.set('view engine', 'pug');
 app.set('views', 'views');
 
 app.use(express.urlencoded({ extended: true }));
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
-app.get("/", async (req, res) => {
+
+//routes and controllers
+app.get("/", pageViewMid, async (req, res) => {
   const notes = await Note.find();
   res.render("index",{ notes: notes } )
 });
