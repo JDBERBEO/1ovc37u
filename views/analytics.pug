@@ -1,0 +1,12 @@
+
+
+block body 
+    table 
+        thead 
+            th Path 
+            th Number of Visits  
+        tbody
+            each pageView in pageViews
+                tr
+                    td(class='path')= pageView.path
+                    td= pageView.count

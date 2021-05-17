@@ -6,6 +6,9 @@ const PageView = new mongoose.Schema({
         type: Date,
         default: Date.now()},
     userAgent: {type: String},
+    count: {
+        type: Number,
+        default: 1}
 })
 
 module.exports = mongoose.model('PageView', PageView)

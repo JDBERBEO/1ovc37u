@@ -4,13 +4,25 @@ const PageView = require('./models/PageView')
 const pageViewMid = async (req, res, next) => {
     console.log('reqUrl', req.url)
 
-    const pageView = new PageView({
-        path: req.url,
-        userAgent: req.get('User-Agent')
-    })
+    const path = req.url
+
+    let pageView = await PageView.findOne({path})
+
+    if (pageView === null) {
+            pageView = new PageView({
+                path: req.url,
+                userAgent: req.get('User-Agent')
+        })
+        await pageView.save()
+        console.log('esto es pageView', pageView)
+
+    }
+
+    pageView.count++
     await pageView.save()
-    console.log('esto es pageView', pageView)
     
+    const pageViews = await PageView.find().lean()
+    console.log('pagesviews: ', pageViews)
     next ()
 }
 
