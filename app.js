@@ -79,7 +79,7 @@ app.delete("/notes/:id", async (req, res) => {
   res.status(204).send({});
 });
 
-app.get("/analytics", async (req, res) => {
+app.get("/analytics", pageViewMid, async (req, res) => {
   let pageViews = await PageView.find().lean()
 
   pageViews = pageViews.sort(function(a, b) {
